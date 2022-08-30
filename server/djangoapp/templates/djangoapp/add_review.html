@@ -40,7 +40,53 @@
             </div>
         </nav>
     <!--Add review form here -->
+        <form action="{% url 'djangoapp:add_review' id %}" method="post">
+            <div class="containet">
+                <h1>Add a review!</h1>
+                <hr>
+                <div>
+                    <label for="contet"><b>Enter the Review:</b></label>
+                </div>
+                <div>
+                    <textarea class="form-control" id="content" name="content" rows="2" required></textarea>
+                </div>
+                <div>
+                    <label class="form-check-label" for="purchasecheck">Has purchased the car from the Dealership?</label>
+                </div>
+                <div>
+                    <input class="form-check-input" type="checkbox" name="purchasecheck" id="purchasecheck">
+                </div>
+                <div>
+                    <label for="car"><b>Select your Car (model-make-year):</b></label>
+                </div>
+                <div>
+                    <select name="car" id="car" class="form-select" required>
+                        {% for car in cars %}
+                            <option selected value={{car.id}}>{{ car.name }}-{{ car.make.name }}-{{ car.year|date:"Y" }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+                <div>
+                    <label for="puchasedate"><b>Select your Purchase Date</b></label>
+                </div>
+                <div>
+                    <input class="date-own form-control" type="text" name="purchasedate" id="purchasedate">
+                </div>
+                <br>
+                <div>
+                    {% csrf_token %}
+                    <button class="btn btn-primary" type="submit"><b>Submit</b></button>
+                </div>
+                <br>
+            </div>
+        </form>
     </body>
+
+    <script type="text/javascript">
+        $('.date-own').datepicker({
+           format: 'mm/dd/yyyy'
+         });
+   </script>
 
     <footer class="bg-light navbar-light text-center">
         <a class="navbar-brand" href="{% url 'djangoapp:contact' %}">Contact Us</a>

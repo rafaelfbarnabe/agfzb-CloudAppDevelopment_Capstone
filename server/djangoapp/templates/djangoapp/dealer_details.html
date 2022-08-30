@@ -25,6 +25,7 @@
             <ul class="nav navbar-nav navbar-right">
                 {% if user.is_authenticated %}
                     <li>
+                        <a class="btn btn-link" href="{% url 'djangoapp:add_review' dealer.id %}">Add Review</a>
                         <a class="btn btn-link" href="#">{{ user.first_name }} ({{ user.username }})</a>
                         <a class="btn btn-link" href="{% url 'djangoapp:logout' %}">Logout</a>
                     </li>
@@ -45,7 +46,18 @@
         </div>
     </nav>
     <!-- Add reviews as cards -->
-    <p>{{ context.review }}</p>
+    <div class="card-columns">
+        {% for review in reviews %}
+            <div class="card">
+                <img class="card-img-left">
+                <div class="card-body">
+                    <text class="card-title">{{ review.car_make }}, {{ review.car_model }}</text>
+                    <text class="card-title">{{ review.year }}</text>
+                    <text class="card-text">{{ review.review }}</text>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
     </body>
 
     <footer class="bg-light navbar-light text-center">
